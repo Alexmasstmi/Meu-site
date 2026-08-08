@@ -6,7 +6,9 @@ type Lang = "en" | "fi" | "pt";
 type Page = "home" | "about" | "alex" | "care" | "organizations" | "hospitality" | "contact";
 
 const TIMMA = "https://varaa.timma.fi/reservation/threearchestmialexmendes";
-const EMAIL = "hello@threearches.co";
+const EMAIL = "tmialexmass@gmail.com";
+const WHATSAPP = "https://wa.me/358408093022";
+const MAPS = "https://www.google.com/maps/search/?api=1&query=Snellmaninkatu%2029%20C%2C%2000170%20Helsinki%2C%20Finland";
 
 const ui = {
   en: {
@@ -287,6 +289,30 @@ const pages = {
   },
 } as const;
 
+const contactInfo = {
+  en: {
+    intro: "Choose the channel that feels most practical. Individual sessions are booked through Timma; organizational and hospitality conversations are arranged directly.",
+    whatsapp: "WhatsApp Business", whatsappAction: "Open WhatsApp", whatsappMessage: "Hello Three Arches, I would like to start a conversation.",
+    email: "Email", emailAction: "Send an email",
+    location: "Studio", address: "Snellmaninkatu 29 C · Kruununhaka · 00170 Helsinki", mapsAction: "Open in Google Maps",
+    availability: "Availability", availabilityText: "Individual care is available by appointment; current times are shown in Timma. Organizational and hospitality conversations, meetings and projects are arranged according to context and mutual availability.",
+  },
+  fi: {
+    intro: "Valitse sinulle käytännöllisin yhteydenottotapa. Yksilölliset hoitoajat varataan Timmasta; organisaatio- ja vieraanvaraisuuskeskustelut sovitaan suoraan.",
+    whatsapp: "WhatsApp Business", whatsappAction: "Avaa WhatsApp", whatsappMessage: "Hei Three Arches, haluaisin aloittaa keskustelun.",
+    email: "Sähköposti", emailAction: "Lähetä sähköpostia",
+    location: "Studio", address: "Snellmaninkatu 29 C · Kruununhaka · 00170 Helsinki", mapsAction: "Avaa Google Mapsissa",
+    availability: "Saatavuus", availabilityText: "Yksilöllinen hoito on saatavilla ajanvarauksella; ajantasaiset ajat näkyvät Timmassa. Organisaatioiden ja vieraanvaraisuuden keskustelut, tapaamiset ja projektit sovitaan tilanteen ja yhteisen saatavuuden mukaan.",
+  },
+  pt: {
+    intro: "Escolha o canal mais prático para você. Os atendimentos individuais são agendados pelo Timma; conversas com organizações e hospitalidade são combinadas diretamente.",
+    whatsapp: "WhatsApp Business", whatsappAction: "Abrir WhatsApp", whatsappMessage: "Olá, Three Arches. Gostaria de iniciar uma conversa.",
+    email: "E-mail", emailAction: "Enviar e-mail",
+    location: "Estúdio", address: "Snellmaninkatu 29 C · Kruununhaka · 00170 Helsinki", mapsAction: "Abrir no Google Maps",
+    availability: "Disponibilidade", availabilityText: "O cuidado individual acontece mediante agendamento; os horários atuais estão disponíveis no Timma. Conversas, reuniões e projetos com organizações e hospitalidade são combinados conforme o contexto e a disponibilidade das partes.",
+  },
+} as const;
+
 const routes = ["/about", "/individual-care", "/organizations", "/hospitality", "/alex"];
 const pageRoutes: Record<Page, string> = { home: "/", about: "/about", alex: "/alex", care: "/individual-care", organizations: "/organizations", hospitality: "/hospitality", contact: "/contact" };
 
@@ -387,15 +413,27 @@ export default function SitePage({ page }: { page: Page }) {
         <div className="internal-image"><img src={heroImage} alt="" /></div>
       </section>
       <section className="content-strands">
-        {t.sections.map(([title, text], i) => <article key={title}><span>0{i + 1}</span><h2>{title}</h2><p>{text}</p>{page === "contact" && <a className="strand-link" href={i === 0 ? TIMMA : `mailto:${EMAIL}?subject=${encodeURIComponent(title)}`}>{i === 0 ? ui[lang].book : title} ↗</a>}</article>)}
+        {t.sections.map(([title, text], i) => <article key={title}><span>0{i + 1}</span><h2>{title}</h2><p>{text}</p>{page === "contact" && <a className="strand-link" href={i === 0 ? TIMMA : `${route("/contact", lang)}#general-contact`} target={i === 0 ? "_blank" : undefined} rel={i === 0 ? "noreferrer" : undefined}>{i === 0 ? ui[lang].book : title} ↗</a>}</article>)}
       </section>
-      <section className="internal-cta">
+      {page === "contact" ? (() => {
+        const c = contactInfo[lang];
+        const whatsappHref = `${WHATSAPP}?text=${encodeURIComponent(c.whatsappMessage)}`;
+        return <section className="contact-panel" id="general-contact">
+          <div className="contact-heading"><p className="eyebrow">{t.label}</p><h2>{t.actionTitle}</h2><p>{c.intro}</p></div>
+          <div className="contact-grid">
+            <article><span>01</span><h3>{c.whatsapp}</h3><p>+358 40 809 3022</p><a href={whatsappHref} target="_blank" rel="noreferrer">{c.whatsappAction} ↗</a></article>
+            <article><span>02</span><h3>{c.email}</h3><p>{EMAIL}</p><a href={`mailto:${EMAIL}`}>{c.emailAction} ↗</a></article>
+            <article><span>03</span><h3>{c.location}</h3><p>{c.address}</p><a href={MAPS} target="_blank" rel="noreferrer">{c.mapsAction} ↗</a></article>
+            <article><span>04</span><h3>{c.availability}</h3><p>{c.availabilityText}</p></article>
+          </div>
+        </section>;
+      })() : <section className="internal-cta">
         <p className="eyebrow">{t.label}</p><h2>{t.actionTitle}</h2>
         <div className="closing-actions">{t.actions.map((action, i) => {
-          const href = actionLinks[i] ? route(actionLinks[i], lang) : page === "care" ? TIMMA : `mailto:${EMAIL}?subject=${encodeURIComponent(action)}`;
+          const href = actionLinks[i] ? route(actionLinks[i], lang) : page === "care" ? TIMMA : `${route("/contact", lang)}#general-contact`;
           return <a className={`button ${i > 0 ? "button-outline" : ""}`} href={href} key={action} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>{action}<span>↗</span></a>;
         })}</div>
-      </section>
+      </section>}
       <Footer lang={lang} />
     </main>
   );
