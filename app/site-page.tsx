@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 
 type Lang = "en" | "fi" | "pt";
 type Page = "home" | "about" | "alex" | "care" | "organizations" | "hospitality" | "contact";
@@ -9,22 +10,58 @@ const TIMMA = "https://varaa.timma.fi/reservation/threearchestmialexmendes";
 const EMAIL = "tmialexmass@gmail.com";
 const WHATSAPP = "https://wa.me/358408093022";
 const MAPS = "https://www.google.com/maps/search/?api=1&query=Snellmaninkatu%2029%20C%2C%2000170%20Helsinki%2C%20Finland";
+const GOOGLE_PROFILE = "https://www.google.com/maps/search/?api=1&query=Three%20Arches%20Hierontastudio%20-%20Tmi%20Alex%20Mendes";
+const REVIEW_LINKS = [
+  "https://maps.app.goo.gl/mej33wnFYiEoPtjv5",
+  "https://maps.app.goo.gl/USmJfHesz46c4T2H7",
+  "https://maps.app.goo.gl/uo9WpMvqF2dNWyQg8",
+] as const;
 
 const ui = {
   en: {
     nav: ["Approach", "Individual Care", "Organizations", "Hospitality", "About"],
-    book: "Book a Session", back: "Back to home", top: "Back to top",
+    book: "Book a Session", back: "Back to home", top: "Back to top", menu: "Menu", close: "Close", contact: "Contact",
     labels: ["Body", "Care", "Relationships"],
   },
   fi: {
     nav: ["Lähestymistapa", "Yksilöllinen hoito", "Organisaatiot", "Vieraanvaraisuus", "Tietoa"],
-    book: "Varaa aika", back: "Takaisin etusivulle", top: "Takaisin alkuun",
+    book: "Varaa aika", back: "Takaisin etusivulle", top: "Takaisin alkuun", menu: "Valikko", close: "Sulje", contact: "Yhteystiedot",
     labels: ["Keho", "Hoiva", "Suhteet"],
   },
   pt: {
     nav: ["Abordagem", "Cuidado individual", "Organizações", "Hospitalidade", "Sobre"],
-    book: "Agendar sessão", back: "Voltar à página inicial", top: "Voltar ao topo",
+    book: "Agendar sessão", back: "Voltar à página inicial", top: "Voltar ao topo", menu: "Menu", close: "Fechar", contact: "Contato",
     labels: ["Corpo", "Cuidado", "Relações"],
+  },
+} as const;
+
+const reviews = {
+  en: {
+    label: "Client experiences", title: "Care, experienced and shared", intro: "A few words from people who have encountered the work in practice.",
+    items: [
+      ["Saara Milton", "Alexandre’s massage has been invaluable to me as a dancer. I feel that my concerns have been heard as a whole.", "Translated from Finnish"],
+      ["Kafren MP Olemisen Alkemia", "The treatment with Alex felt deeply welcoming, safe and comforting. I left feeling more centered, present and sincerely grateful.", "Translated from Finnish"],
+      ["Jod Moreira", "The treatment has been incredible. It has made a huge difference in my daily life and pain management.", "Original in English"],
+    ],
+    source: "Read this review on Google", all: "Read all reviews on Google", contactTitle: "Already visited Three Arches?", contactText: "Your experience can help someone else decide whether this care feels right for them.", contactAction: "Visit our Google profile",
+  },
+  fi: {
+    label: "Asiakkaiden kokemuksia", title: "Koettua ja jaettua hoivaa", intro: "Muutama sana ihmisiltä, jotka ovat kohdanneet työn käytännössä.",
+    items: [
+      ["Saara Milton", "Alexandren hieronta on ollut minulle tanssijana korvaamaton apu. Koen tulleeni kokonaisvaltaisesti kuulluksi vaivoineni.", "Alkuperäinen suomeksi"],
+      ["Kafren MP Olemisen Alkemia", "Hoito Alexin kanssa tuntui hyvin vastaanottavalta, turvalliselta ja lohdulliselta. Lähdin pois keskittyneempänä, läsnä olevana ja sydämestäni kiitollisena.", "Alkuperäinen suomeksi"],
+      ["Jod Moreira", "Hoito on ollut uskomatonta. Se on vaikuttanut suuresti jokapäiväiseen elämääni ja kivun hallintaan.", "Käännetty englannista"],
+    ],
+    source: "Lue arvio Google-palvelussa", all: "Lue kaikki arviot Googlesta", contactTitle: "Oletko jo käynyt Three Archesissa?", contactText: "Kokemuksesi voi auttaa toista ihmistä arvioimaan, sopiiko tämä hoito hänelle.", contactAction: "Avaa Google-profiilimme",
+  },
+  pt: {
+    label: "Experiências de clientes", title: "Cuidado vivido e compartilhado", intro: "Algumas palavras de pessoas que encontraram este trabalho na prática.",
+    items: [
+      ["Saara Milton", "A massagem do Alexandre tem sido uma ajuda inestimável para mim como bailarina. Sinto que minhas necessidades foram compreendidas de forma integral.", "Traduzido do finlandês"],
+      ["Kafren MP Olemisen Alkemia", "O tratamento com Alex foi muito acolhedor, seguro e reconfortante. Saí mais centrada, presente e sinceramente grata.", "Traduzido do finlandês"],
+      ["Jod Moreira", "O tratamento tem sido incrível. Fez uma enorme diferença na minha vida diária e no controle da dor.", "Traduzido do inglês"],
+    ],
+    source: "Ler esta avaliação no Google", all: "Ler todas as avaliações no Google", contactTitle: "Você já visitou a Three Arches?", contactText: "Sua experiência pode ajudar outra pessoa a decidir se este cuidado faz sentido para ela.", contactAction: "Visitar nosso perfil no Google",
   },
 } as const;
 
@@ -322,6 +359,16 @@ function route(path: string, lang: Lang) {
 
 function Header({ lang, setLang, page }: { lang: Lang; setLang: (l: Lang) => void; page: Page }) {
   const t = ui[lang];
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setMenuOpen(false); };
+    document.addEventListener("keydown", closeOnEscape);
+    document.body.classList.toggle("menu-is-open", menuOpen);
+    return () => { document.removeEventListener("keydown", closeOnEscape); document.body.classList.remove("menu-is-open"); };
+  }, [menuOpen]);
+  const menuItems = [
+    ["Home", "/"], [t.nav[1], "/individual-care"], [t.nav[2], "/organizations"], [t.nav[3], "/hospitality"], [t.nav[4], "/alex"], [t.contact, "/contact"],
+  ];
   return (
     <header className="nav-shell">
       <a href={route("/", lang)} className="brand" aria-label="Three Arches home"><img className="brand-symbol" src="/brand/three-arches-symbol.png" alt="" /></a>
@@ -335,8 +382,15 @@ function Header({ lang, setLang, page }: { lang: Lang; setLang: (l: Lang) => voi
       <div className="nav-actions">
         <div className="language" aria-label="Choose language">{(["en", "fi", "pt"] as Lang[]).map((code) => <button key={code} onClick={() => setLang(code)} aria-pressed={lang === code}>{code.toUpperCase()}</button>)}</div>
         <a className="button button-small" href={TIMMA} target="_blank" rel="noreferrer">{t.book}</a>
+        <button className="menu-trigger" type="button" onClick={() => setMenuOpen(true)} aria-expanded={menuOpen} aria-controls="site-menu"><span>{t.menu}</span><i aria-hidden="true">☰</i></button>
       </div>
       {page !== "home" && <a className="mobile-back" href={route("/", lang)}>← {t.back}</a>}
+      <button className={`menu-scrim ${menuOpen ? "is-open" : ""}`} type="button" aria-label={t.close} onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} />
+      <aside className={`menu-panel ${menuOpen ? "is-open" : ""}`} id="site-menu" aria-hidden={!menuOpen} aria-label={t.menu}>
+        <div className="menu-panel-head"><img src="/brand/three-arches-symbol.png" alt="" /><button type="button" onClick={() => setMenuOpen(false)}>{t.close} <span aria-hidden="true">×</span></button></div>
+        <nav aria-label={t.menu}>{menuItems.map(([label, path], index) => <a key={path} href={route(path, lang)} onClick={() => setMenuOpen(false)} style={{"--menu-index": index} as CSSProperties}><span>0{index + 1}</span>{label}</a>)}</nav>
+        <a className="button menu-book" href={TIMMA} target="_blank" rel="noreferrer">{t.book}<span>↗</span></a>
+      </aside>
     </header>
   );
 }
@@ -395,6 +449,14 @@ export default function SitePage({ page }: { page: Page }) {
 
         <section className="meet-section"><div className="meet-image"><img src="/images/alex-portrait.jpeg" alt="Portrait of Alex Mendes" /><span>Rio de Janeiro ↔ Helsinki</span></div><div className="meet-copy"><p className="eyebrow">{t.meetLabel}</p><h2>{t.meetTitle}</h2><p>{t.meetText}</p><a className="text-link" href={route("/alex", lang)}>{t.meetAction}<span>↘</span></a></div></section>
 
+        <section className="reviews-section">
+          <div className="reviews-heading"><p className="eyebrow">{reviews[lang].label}</p><h2>{reviews[lang].title}</h2><p>{reviews[lang].intro}</p></div>
+          <div className="reviews-track" aria-label={reviews[lang].label}>{reviews[lang].items.map(([author, quote, note], index) => <article className="review-card" key={author}>
+            <div className="review-stars" aria-label="5 out of 5 stars">★★★★★</div><blockquote>“{quote}”</blockquote><div className="review-meta"><strong>{author}</strong><span>{note} · Google review</span></div><a href={REVIEW_LINKS[index]} target="_blank" rel="noreferrer">{reviews[lang].source} ↗</a>
+          </article>)}</div>
+          <a className="text-link" href={GOOGLE_PROFILE} target="_blank" rel="noreferrer">{reviews[lang].all}<span>↗</span></a>
+        </section>
+
         <section className="closing"><p className="eyebrow">Three Arches · Helsinki</p><h2>{t.closeTitle}</h2><p>{t.closeText}</p><div className="closing-actions"><a className="button" href={TIMMA} target="_blank" rel="noreferrer">{t.closePrimary}<span>↗</span></a><a className="button button-outline" href={route("/contact", lang)}>{t.closeSecondary}<span>↗</span></a></div></section>
         <Footer lang={lang} />
       </main>
@@ -418,7 +480,7 @@ export default function SitePage({ page }: { page: Page }) {
       {page === "contact" ? (() => {
         const c = contactInfo[lang];
         const whatsappHref = `${WHATSAPP}?text=${encodeURIComponent(c.whatsappMessage)}`;
-        return <section className="contact-panel" id="general-contact">
+        return <><section className="review-invitation"><div><p className="eyebrow">Google reviews</p><h2>{reviews[lang].contactTitle}</h2><p>{reviews[lang].contactText}</p></div><a className="button button-outline" href={GOOGLE_PROFILE} target="_blank" rel="noreferrer">{reviews[lang].contactAction}<span>↗</span></a></section><section className="contact-panel" id="general-contact">
           <div className="contact-heading"><p className="eyebrow">{t.label}</p><h2>{t.actionTitle}</h2><p>{c.intro}</p></div>
           <div className="contact-grid">
             <article><span>01</span><h3>{c.whatsapp}</h3><p>+358 40 809 3022</p><a href={whatsappHref} target="_blank" rel="noreferrer">{c.whatsappAction} ↗</a></article>
@@ -426,7 +488,7 @@ export default function SitePage({ page }: { page: Page }) {
             <article><span>03</span><h3>{c.location}</h3><p>{c.address}</p><a href={MAPS} target="_blank" rel="noreferrer">{c.mapsAction} ↗</a></article>
             <article><span>04</span><h3>{c.availability}</h3><p>{c.availabilityText}</p></article>
           </div>
-        </section>;
+        </section></>;
       })() : <section className="internal-cta">
         <p className="eyebrow">{t.label}</p><h2>{t.actionTitle}</h2>
         <div className="closing-actions">{t.actions.map((action, i) => {

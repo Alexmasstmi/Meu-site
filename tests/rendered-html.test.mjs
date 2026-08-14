@@ -24,6 +24,10 @@ test("server-renders the Three Arches home page", async () => {
   assert.match(html, /Individual Care/);
   assert.match(html, /Organizations/);
   assert.match(html, /Hospitality/);
+  assert.match(html, /Care, experienced and shared/);
+  assert.match(html, /Saara Milton/);
+  assert.match(html, /Read all reviews on Google/);
+  assert.match(html, /id="site-menu"/);
 });
 
 test("server-renders the first encounter contact routes", async () => {
@@ -37,4 +41,6 @@ test("server-renders the first encounter contact routes", async () => {
   assert.match(html, /Snellmaninkatu 29 C/);
   assert.match(html, /Open in Google Maps/);
   assert.match(html, /wa\.me\/358408093022/);
+  assert.match(html, /Already visited Three Arches/);
+  assert.match(html, /Visit our Google profile/);
 });
