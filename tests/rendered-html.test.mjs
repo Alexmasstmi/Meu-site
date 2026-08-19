@@ -37,7 +37,7 @@ test("server-renders the first encounter contact routes", async () => {
   const html = await response.text();
   assert.match(html, /First Encounter/);
   assert.match(html, /\+358 40 809 3022/);
-  assert.match(html, /tmialexmass@gmail\.com/);
+  assert.match(html, /alexmendes@threearches\.co/);
   assert.match(html, /Snellmaninkatu 29 C/);
   assert.match(html, /Open in Google Maps/);
   assert.match(html, /wa\.me\/358408093022/);

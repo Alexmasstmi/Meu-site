@@ -7,7 +7,7 @@ type Lang = "en" | "fi" | "pt";
 type Page = "home" | "about" | "alex" | "care" | "organizations" | "hospitality" | "contact";
 
 const TIMMA = "https://varaa.timma.fi/reservation/threearchestmialexmendes";
-const EMAIL = "tmialexmass@gmail.com";
+const EMAIL = "alexmendes@threearches.co";
 const WHATSAPP = "https://wa.me/358408093022";
 const MAPS = "https://www.google.com/maps/search/?api=1&query=Snellmaninkatu%2029%20C%2C%2000170%20Helsinki%2C%20Finland";
 const GOOGLE_PROFILE = "https://www.google.com/maps/search/?api=1&query=Three%20Arches%20Hierontastudio%20-%20Tmi%20Alex%20Mendes";
