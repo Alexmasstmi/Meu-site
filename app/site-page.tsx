@@ -19,17 +19,17 @@ const REVIEW_LINKS = [
 
 const ui = {
   en: {
-    nav: ["Approach", "Individual Care", "Organizations", "Hospitality", "About"],
+    nav: ["Approach", "Massage & Individual Care", "Organizations", "Hospitality", "About"],
     book: "Book a Session", back: "Back to home", top: "Back to top", menu: "Menu", close: "Close", contact: "Contact",
     labels: ["Body", "Care", "Relationships"],
   },
   fi: {
-    nav: ["Lähestymistapa", "Yksilöllinen hoito", "Organisaatiot", "Vieraanvaraisuus", "Tietoa"],
+    nav: ["Lähestymistapa", "Hieronta & yksilöllinen hoito", "Organisaatiot", "Vieraanvaraisuus", "Tietoa"],
     book: "Varaa aika", back: "Takaisin etusivulle", top: "Takaisin alkuun", menu: "Valikko", close: "Sulje", contact: "Yhteystiedot",
     labels: ["Keho", "Hoiva", "Suhteet"],
   },
   pt: {
-    nav: ["Abordagem", "Cuidado individual", "Organizações", "Hospitalidade", "Sobre"],
+    nav: ["Abordagem", "Massagem e cuidado individual", "Organizações", "Hospitalidade", "Sobre"],
     book: "Agendar sessão", back: "Voltar à página inicial", top: "Voltar ao topo", menu: "Menu", close: "Fechar", contact: "Contato",
     labels: ["Corpo", "Cuidado", "Relações"],
   },
@@ -69,8 +69,8 @@ const home = {
   en: {
     eyebrow: "Body · Care · Relationships",
     title: "Everything begins with the body.",
-    intro: "Three Arches brings together bodywork, somatic learning and relational practices—supporting people and organizations in moving through complexity with greater presence, care and trust.",
-    primary: "Explore Individual Care", secondary: "Work with Three Arches",
+    intro: "Massage therapy, manual therapy and somatic care in Helsinki—alongside embodied and relational work for organizations and hospitality.",
+    primary: "Explore Massage & Individual Care", secondary: "Work with Three Arches",
     introTitle: "A human practice across different scales",
     introText: "The body is where we experience tension and ease, protection and openness, stability and change. By beginning with what is already present, Three Arches creates pathways from individual care to embodied learning and healthier ways of relating.",
     archesTitle: "Three expressions of the same philosophy",
@@ -82,7 +82,7 @@ const home = {
     philosophy: "Explore our philosophy",
     pathwaysTitle: "Begin where you are",
     pathways: [
-      ["Individual Care", "Manual therapy and somatic sessions for pain, tension, recovery, regulation and a renewed connection with your body.", "Explore Individual Care"],
+      ["Massage & Individual Care", "Massage therapy, manual therapy and somatic sessions for pain, tension, recovery, regulation and a renewed connection with your body.", "Explore Massage & Individual Care"],
       ["Organizations", "Embodied learning for leaders and teams seeking greater trust, adaptability, collaboration and relational intelligence.", "Explore Organizations"],
       ["Hospitality", "Bodywork and somatic experiences that make care a tangible part of the guest experience.", "Explore Hospitality"],
     ],
@@ -96,8 +96,8 @@ const home = {
   fi: {
     eyebrow: "Keho · Hoiva · Suhteet",
     title: "Kaikki alkaa kehosta.",
-    intro: "Three Arches yhdistää kehollisen hoidon, somaattisen oppimisen ja relationaaliset käytännöt. Se tukee ihmisiä ja organisaatioita kohtaamaan monimutkaisuutta läsnäolevammin, huolehtivammin ja luottavaisemmin.",
-    primary: "Tutustu yksilölliseen hoitoon", secondary: "Työskentele Three Archesin kanssa",
+    intro: "Hierontaterapiaa, manuaalista terapiaa ja somaattista hoivaa Helsingissä — sekä kehollista ja relationaalista työskentelyä organisaatioille ja vieraanvaraisuuden ympäristöihin.",
+    primary: "Tutustu hierontaan ja yksilölliseen hoitoon", secondary: "Työskentele Three Archesin kanssa",
     introTitle: "Inhimillinen käytäntö eri mittakaavoissa",
     introText: "Kehossa koemme jännityksen ja helppouden, suojautumisen ja avoimuuden, vakauden ja muutoksen. Lähtemällä siitä, mikä on jo läsnä, Three Arches avaa polkuja yksilöllisestä hoidosta keholliseen oppimiseen ja terveempiin suhteessa olemisen tapoihin.",
     archesTitle: "Saman filosofian kolme ilmenemismuotoa",
@@ -109,7 +109,7 @@ const home = {
     philosophy: "Tutustu filosofiaamme",
     pathwaysTitle: "Aloita siitä, missä olet",
     pathways: [
-      ["Yksilöllinen hoito", "Manuaalista terapiaa ja somaattisia tapaamisia kipuun, jännitykseen, palautumiseen, säätelyyn ja yhteyteen oman kehon kanssa.", "Tutustu yksilölliseen hoitoon"],
+      ["Hieronta & yksilöllinen hoito", "Hierontaterapiaa, manuaalista terapiaa ja somaattisia tapaamisia kipuun, jännitykseen, palautumiseen, säätelyyn ja yhteyteen oman kehon kanssa.", "Tutustu hierontaan ja yksilölliseen hoitoon"],
       ["Organisaatiot", "Kehollista oppimista johtajille ja tiimeille, jotka etsivät lisää luottamusta, sopeutumiskykyä, yhteistyötä ja suhdeälykkyyttä.", "Tutustu organisaatioille suunnattuun työhön"],
       ["Vieraanvaraisuus", "Kehollista hoitoa ja somaattisia kokemuksia, jotka tekevät huolenpidosta konkreettisen osan vieraskokemusta.", "Tutustu vieraanvaraisuuteen"],
     ],
@@ -123,8 +123,8 @@ const home = {
   pt: {
     eyebrow: "Corpo · Cuidado · Relações",
     title: "Tudo começa pelo corpo.",
-    intro: "A Three Arches reúne trabalho corporal, aprendizagem somática e práticas relacionais, apoiando pessoas e organizações a atravessar a complexidade com mais presença, cuidado e confiança.",
-    primary: "Conheça o cuidado individual", secondary: "Trabalhe com a Three Arches",
+    intro: "Massoterapia, terapia manual e cuidado somático em Helsinque — junto ao trabalho incorporado e relacional para organizações e hospitalidade.",
+    primary: "Conheça a massagem e o cuidado individual", secondary: "Trabalhe com a Three Arches",
     introTitle: "Uma prática humana em diferentes escalas",
     introText: "É no corpo que vivemos tensão e facilidade, proteção e abertura, estabilidade e mudança. Partindo do que já está presente, a Three Arches cria caminhos do cuidado individual à aprendizagem incorporada e a formas mais saudáveis de se relacionar.",
     archesTitle: "Três expressões da mesma filosofia",
@@ -136,7 +136,7 @@ const home = {
     philosophy: "Conheça nossa filosofia",
     pathwaysTitle: "Comece de onde você está",
     pathways: [
-      ["Cuidado individual", "Terapia manual e sessões somáticas para dor, tensão, recuperação, regulação e uma conexão renovada com o corpo.", "Conheça o cuidado individual"],
+      ["Massagem e cuidado individual", "Massoterapia, terapia manual e sessões somáticas para dor, tensão, recuperação, regulação e uma conexão renovada com o corpo.", "Conheça a massagem e o cuidado individual"],
       ["Organizações", "Aprendizagem incorporada para líderes e equipes que buscam mais confiança, adaptabilidade, colaboração e inteligência relacional.", "Conheça o trabalho com organizações"],
       ["Hospitalidade", "Trabalho corporal e experiências somáticas que tornam o cuidado uma parte concreta da experiência do hóspede.", "Conheça a hospitalidade"],
     ],
@@ -210,7 +210,7 @@ const pages = {
   },
   care: {
     en: {
-      label: "Individual Care", title: "Care for what your body is experiencing now.", lead: "Manual therapy and somatic work for pain, muscular tension, fatigue, stress, overload and recovery.",
+      label: "Massage & Individual Care", title: "Care for what your body is experiencing now.", lead: "Massage therapy, manual therapy and somatic work for pain, muscular tension, fatigue, stress, overload and recovery.",
       sections: [
         ["What a session can support", "Sessions may help ease pain and tension, support nervous-system regulation, restore movement and create a clearer connection with bodily signals. Care is adapted to your present condition."],
         ["What happens", "We begin with a short conversation about what brings you in. The session may include massage, manual therapy, guided awareness and simple movement. You remain informed and in choice throughout."],
@@ -219,7 +219,7 @@ const pages = {
       actionTitle: "A first session begins with what is here.", actions: ["Book a Session"],
     },
     fi: {
-      label: "Yksilöllinen hoito", title: "Hoivaa sille, mitä kehosi kokee juuri nyt.", lead: "Manuaalista terapiaa ja somaattista työskentelyä kipuun, lihasjännitykseen, väsymykseen, stressiin, kuormitukseen ja palautumiseen.",
+      label: "Hieronta & yksilöllinen hoito", title: "Hoivaa sille, mitä kehosi kokee juuri nyt.", lead: "Hierontaterapiaa, manuaalista terapiaa ja somaattista työskentelyä kipuun, lihasjännitykseen, väsymykseen, stressiin, kuormitukseen ja palautumiseen.",
       sections: [
         ["Mihin tapaaminen voi auttaa", "Tapaaminen voi lievittää kipua ja jännitystä, tukea hermoston säätelyä, palauttaa liikettä ja selkeyttää yhteyttä kehon viesteihin. Hoito mukautetaan tämänhetkiseen tilanteeseesi."],
         ["Mitä tapaamisessa tapahtuu", "Aloitamme lyhyellä keskustelulla siitä, mikä tuo sinut paikalle. Tapaaminen voi sisältää hierontaa, manuaalista terapiaa, ohjattua kehontuntemusta ja yksinkertaista liikettä. Saat tietoa ja säilytät valinnan koko ajan."],
@@ -228,7 +228,7 @@ const pages = {
       actionTitle: "Ensimmäinen tapaaminen alkaa siitä, mikä on tässä.", actions: ["Varaa aika"],
     },
     pt: {
-      label: "Cuidado individual", title: "Cuidado para o que seu corpo vive agora.", lead: "Terapia manual e trabalho somático para dor, tensão muscular, fadiga, estresse, sobrecarga e recuperação.",
+      label: "Massagem e cuidado individual", title: "Cuidado para o que seu corpo vive agora.", lead: "Massoterapia, terapia manual e trabalho somático para dor, tensão muscular, fadiga, estresse, sobrecarga e recuperação.",
       sections: [
         ["Como uma sessão pode ajudar", "As sessões podem aliviar dor e tensão, apoiar a regulação do sistema nervoso, recuperar movimento e esclarecer a conexão com os sinais do corpo. O cuidado se adapta à sua condição presente."],
         ["O que acontece", "Começamos com uma breve conversa sobre o que traz você. A sessão pode incluir massagem, terapia manual, percepção guiada e movimentos simples. Você permanece informado e com poder de escolha o tempo todo."],

@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
   const title = "Three Arches — Body, care & Relationships";
-  const description = "Somatic care and embodied learning for people, teams and organizations in Helsinki.";
+  const description = "Massage therapy, manual therapy and somatic care for individuals, teams and organizations in Helsinki.";
 
   return {
     title,
