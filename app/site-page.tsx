@@ -381,7 +381,10 @@ function Header({ lang, setLang, page }: { lang: Lang; setLang: (l: Lang) => voi
   ];
   return (
     <header className="nav-shell">
-      <a href={route("/", lang)} className="brand" aria-label="Three Arches home"><img className="brand-symbol" src="/brand/three-arches-symbol.png" alt="" /></a>
+      <div className="brand-menu">
+        <a href={route("/", lang)} className="brand" aria-label="Three Arches home"><img className="brand-symbol" src="/brand/three-arches-symbol.png" alt="" /></a>
+        <button className="menu-trigger" type="button" onClick={() => setMenuOpen(true)} aria-expanded={menuOpen} aria-controls="site-menu"><span>{t.menu}</span><i aria-hidden="true">☰</i></button>
+      </div>
       <nav aria-label="Main navigation">
         <a href={route("/about", lang)}>{t.nav[0]}</a>
         <a href={route("/individual-care", lang)}>{t.nav[1]}</a>
@@ -392,7 +395,6 @@ function Header({ lang, setLang, page }: { lang: Lang; setLang: (l: Lang) => voi
       <div className="nav-actions">
         <div className="language" aria-label="Choose language">{(["en", "fi", "pt"] as Lang[]).map((code) => <button key={code} onClick={() => setLang(code)} aria-pressed={lang === code}>{code.toUpperCase()}</button>)}</div>
         <a className="button button-small" href={TIMMA} target="_blank" rel="noreferrer">{t.book}</a>
-        <button className="menu-trigger" type="button" onClick={() => setMenuOpen(true)} aria-expanded={menuOpen} aria-controls="site-menu"><span>{t.menu}</span><i aria-hidden="true">☰</i></button>
       </div>
       {page !== "home" && <a className="mobile-back" href={route("/", lang)}>← {t.back}</a>}
       <button className={`menu-scrim ${menuOpen ? "is-open" : ""}`} type="button" aria-label={t.close} onClick={() => setMenuOpen(false)} tabIndex={menuOpen ? 0 : -1} />
@@ -449,7 +451,7 @@ export default function SitePage({ page, initialLang = "en" }: { page: Page; ini
           <div className="arches-grid">
             {t.arches.map(([title, summary, detail], index) => (
               <button className={`arch-card ${activeArch === index ? "is-active" : ""}`} key={title} onMouseEnter={() => setActiveArch(index)} onMouseLeave={() => setActiveArch(null)} onFocus={() => setActiveArch(index)} onClick={() => setActiveArch(activeArch === index ? null : index)} aria-expanded={activeArch === index}>
-                <span className="arch-number">0{index + 1}</span><span className="arch-shape" /><strong>{title}</strong><span className="arch-summary">{summary}</span><span className="arch-detail">{detail}</span>
+                <span className="arch-number">0{index + 1}</span><strong>{title}</strong><span className="arch-summary">{summary}</span><span className="arch-detail">{detail}</span>
               </button>
             ))}
           </div>
