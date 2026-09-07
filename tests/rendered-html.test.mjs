@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 async function render(path = "/") {
@@ -43,4 +44,25 @@ test("server-renders the first encounter contact routes", async () => {
   assert.match(html, /wa\.me\/358408093022/);
   assert.match(html, /Already visited Three Arches/);
   assert.match(html, /Visit our Google profile/);
+});
+
+test("presents Embodied Communication with grounded organizational experience", async () => {
+  const response = await render("/organizations?lang=en");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /<title>Embodied Communication for Teams \| Three Arches<\/title>/);
+  assert.match(html, /Communication is not only discussed\. It is lived\./);
+  assert.match(html, /A practice developed across contexts/);
+  assert.match(html, /Explore an Embodied Communication Pilot/);
+  assert.match(html, /rel="canonical" href="https:\/\/threearches\.co\/organizations"/);
+});
+
+test("publishes search-engine discovery files", async () => {
+  const sitemap = await readFile(new URL("../public/sitemap.xml", import.meta.url), "utf8");
+  const robots = await readFile(new URL("../public/robots.txt", import.meta.url), "utf8");
+
+  assert.match(sitemap, /https:\/\/threearches\.co\/individual-care/);
+  assert.match(sitemap, /https:\/\/threearches\.co\/organizations/);
+  assert.match(robots, /Sitemap: https:\/\/threearches\.co\/sitemap\.xml/);
 });

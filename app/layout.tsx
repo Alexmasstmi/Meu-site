@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import "./globals.css";
 
 const localBusinessSchema = {
@@ -33,22 +32,18 @@ const localBusinessSchema = {
   ],
 };
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "threearches.co";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
-  const title = "Three Arches — Body, care & Relationships";
-  const description = "Massage therapy, manual therapy and somatic care for individuals, teams and organizations in Helsinki.";
+const title = "Three Arches | Massage Therapy & Somatic Care in Helsinki";
+const description = "Massage therapy, manual therapy and somatic care in Helsinki, alongside Embodied Communication for teams and organizations.";
 
-  return {
-    title,
-    description,
-    icons: { icon: "/brand/three-arches-symbol.png", shortcut: "/brand/three-arches-symbol.png", apple: "/brand/three-arches-symbol.png" },
-    openGraph: { title, description, type: "website" },
-    twitter: { card: "summary", title, description },
-  };
-}
+export const metadata: Metadata = {
+  metadataBase: new URL("https://threearches.co"),
+  title,
+  description,
+  alternates: { canonical: "/" },
+  icons: { icon: "/brand/three-arches-symbol.png", shortcut: "/brand/three-arches-symbol.png", apple: "/brand/three-arches-symbol.png" },
+  openGraph: { title, description, type: "website", url: "/", images: [{ url: "/og.png", alt: "Three Arches" }] },
+  twitter: { card: "summary_large_image", title, description, images: ["/og.png"] },
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
