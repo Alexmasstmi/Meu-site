@@ -64,5 +64,30 @@ test("publishes search-engine discovery files", async () => {
 
   assert.match(sitemap, /https:\/\/threearches\.co\/individual-care/);
   assert.match(sitemap, /https:\/\/threearches\.co\/organizations/);
+  assert.match(sitemap, /https:\/\/threearches\.co\/fi\/individual-care/);
+  assert.match(sitemap, /https:\/\/threearches\.co\/pt\/individual-care/);
   assert.match(robots, /Sitemap: https:\/\/threearches\.co\/sitemap\.xml/);
+});
+
+test("server-renders an indexable Finnish massage page with local context", async () => {
+  const response = await render("/fi/individual-care");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /<title>Hieronta Kruununhaassa, Helsinki \| Three Arches<\/title>/);
+  assert.match(html, /Hierontaa Helsingin keskustassa/);
+  assert.match(html, /Vallilasta/);
+  assert.match(html, /Eirasta/);
+  assert.match(html, /rel="canonical" href="https:\/\/threearches\.co\/fi\/individual-care"/);
+  assert.match(html, /hrefLang="fi" href="https:\/\/threearches\.co\/fi\/individual-care"/);
+});
+
+test("server-renders an indexable Portuguese localized route", async () => {
+  const response = await render("/pt/individual-care");
+  assert.equal(response.status, 200);
+
+  const html = await response.text();
+  assert.match(html, /Massagem no centro de Helsinque/);
+  assert.match(html, /Kruununhaka/);
+  assert.match(html, /href="\/pt\/organizations"/);
 });

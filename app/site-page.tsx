@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 
-type Lang = "en" | "fi" | "pt";
-type Page = "home" | "about" | "alex" | "care" | "organizations" | "hospitality" | "contact";
+export type Lang = "en" | "fi" | "pt";
+export type Page = "home" | "about" | "alex" | "care" | "organizations" | "hospitality" | "contact";
 
 const TIMMA = "https://varaa.timma.fi/reservation/threearchestmialexmendes";
 const EMAIL = "alexmendes@threearches.co";
@@ -215,6 +215,7 @@ const pages = {
         ["What a session can support", "Sessions may help ease pain and tension, support nervous-system regulation, restore movement and create a clearer connection with bodily signals. Care is adapted to your present condition."],
         ["What happens", "We begin with a short conversation about what brings you in. The session may include massage, manual therapy, guided awareness and simple movement. You remain informed and in choice throughout."],
         ["Practical information", "Sessions take place in Helsinki and are suitable for adults seeking recovery, regulation or body-based support. Current duration, availability and prices are shown in Timma before you confirm."],
+        ["Massage therapy in central Helsinki", "Three Arches is located in Kruununhaka and welcomes clients from across central Helsinki, including Kaisaniemi, Katajanokka, Kluuvi, Kallio, Sörnäinen, Vallila, Kamppi, Punavuori, Eira, Etu-Töölö and Töölö. Sessions take place at Snellmaninkatu 29 C and are available by appointment."],
       ],
       actionTitle: "A first session begins with what is here.", actions: ["Book a Session"],
     },
@@ -224,6 +225,7 @@ const pages = {
         ["Mihin tapaaminen voi auttaa", "Tapaaminen voi lievittää kipua ja jännitystä, tukea hermoston säätelyä, palauttaa liikettä ja selkeyttää yhteyttä kehon viesteihin. Hoito mukautetaan tämänhetkiseen tilanteeseesi."],
         ["Mitä tapaamisessa tapahtuu", "Aloitamme lyhyellä keskustelulla siitä, mikä tuo sinut paikalle. Tapaaminen voi sisältää hierontaa, manuaalista terapiaa, ohjattua kehontuntemusta ja yksinkertaista liikettä. Saat tietoa ja säilytät valinnan koko ajan."],
         ["Käytännön tiedot", "Tapaamiset järjestetään Helsingissä ja sopivat aikuisille, jotka etsivät palautumista, säätelyä tai kehollista tukea. Ajantasainen kesto, saatavuus ja hinnat näkyvät Timmassa ennen vahvistamista."],
+        ["Hierontaa Helsingin keskustassa", "Three Arches sijaitsee Kruununhaassa ja palvelee asiakkaita eri puolilta Helsingin keskustaa, kuten Kaisaniemestä, Katajanokalta, Kluuvista, Kalliosta, Sörnäisistä, Vallilasta, Kampista, Punavuoresta, Eirasta, Etu-Töölöstä ja Töölöstä. Vastaanotto on osoitteessa Snellmaninkatu 29 C ajanvarauksella."],
       ],
       actionTitle: "Ensimmäinen tapaaminen alkaa siitä, mikä on tässä.", actions: ["Varaa aika"],
     },
@@ -233,6 +235,7 @@ const pages = {
         ["Como uma sessão pode ajudar", "As sessões podem aliviar dor e tensão, apoiar a regulação do sistema nervoso, recuperar movimento e esclarecer a conexão com os sinais do corpo. O cuidado se adapta à sua condição presente."],
         ["O que acontece", "Começamos com uma breve conversa sobre o que traz você. A sessão pode incluir massagem, terapia manual, percepção guiada e movimentos simples. Você permanece informado e com poder de escolha o tempo todo."],
         ["Informações práticas", "As sessões acontecem em Helsinque e são indicadas para adultos em busca de recuperação, regulação ou apoio corporal. Duração, disponibilidade e preços atuais aparecem no Timma antes da confirmação."],
+        ["Massagem no centro de Helsinque", "A Three Arches está localizada em Kruununhaka e recebe clientes de diferentes áreas do centro de Helsinque, incluindo Kaisaniemi, Katajanokka, Kluuvi, Kallio, Sörnäinen, Vallila, Kamppi, Punavuori, Eira, Etu-Töölö e Töölö. As sessões acontecem na Snellmaninkatu 29 C, mediante agendamento."],
       ],
       actionTitle: "A primeira sessão começa pelo que está aqui.", actions: ["Agendar sessão"],
     },
@@ -360,7 +363,8 @@ const routes = ["/about", "/individual-care", "/organizations", "/hospitality", 
 const pageRoutes: Record<Page, string> = { home: "/", about: "/about", alex: "/alex", care: "/individual-care", organizations: "/organizations", hospitality: "/hospitality", contact: "/contact" };
 
 function route(path: string, lang: Lang) {
-  return `${path}?lang=${lang}`;
+  if (lang === "en") return path;
+  return path === "/" ? `/${lang}` : `/${lang}${path}`;
 }
 
 function Header({ lang, setLang, page }: { lang: Lang; setLang: (l: Lang) => void; page: Page }) {
@@ -405,27 +409,31 @@ function Footer({ lang }: { lang: Lang }) {
   return <footer><span>© 2026 THREE ARCHES</span><span className="footer-logo-frame"><img className="footer-logo" src="/brand/three-arches-logo-yellow.png" alt="Three Arches" /></span><a href="#top">{ui[lang].top} ↑</a></footer>;
 }
 
-export default function SitePage({ page }: { page: Page }) {
-  const [lang, setLang] = useState<Lang>("en");
+export default function SitePage({ page, initialLang = "en" }: { page: Page; initialLang?: Lang }) {
+  const [lang] = useState<Lang>(initialLang);
   const [activeArch, setActiveArch] = useState<number | null>(null);
 
   useEffect(() => {
     const value = new URLSearchParams(window.location.search).get("lang");
-    if (value === "fi" || value === "pt" || value === "en") setLang(value);
-  }, []);
+    if ((value === "fi" || value === "pt") && initialLang === "en") {
+      window.location.replace(route(pageRoutes[page], value));
+    }
+  }, [initialLang, page]);
 
   useEffect(() => {
-    const url = new URL(window.location.href);
-    url.searchParams.set("lang", lang);
-    window.history.replaceState({}, "", url);
     document.documentElement.lang = lang;
   }, [lang]);
+
+  const changeLanguage = (nextLang: Lang) => {
+    if (nextLang === lang) return;
+    window.location.assign(route(pageRoutes[page], nextLang));
+  };
 
   if (page === "home") {
     const t = home[lang];
     return (
-      <main className="site-shell" id="top">
-        <Header lang={lang} setLang={setLang} page={page} />
+      <main className="site-shell" id="top" lang={lang}>
+        <Header lang={lang} setLang={changeLanguage} page={page} />
         <section className="home-hero">
           <div className="hero-copy">
             <p className="eyebrow">{t.eyebrow}</p><h1>{t.title}</h1><p className="hero-intro">{t.intro}</p>
@@ -474,8 +482,8 @@ export default function SitePage({ page }: { page: Page }) {
   const actionLinks = page === "about" ? ["/individual-care", "/organizations", "/hospitality"] : page === "alex" ? ["/individual-care", "/organizations", "/hospitality"] : [];
 
   return (
-    <main className={`site-shell internal-page page-${page}`} id="top">
-      <Header lang={lang} setLang={setLang} page={page} />
+    <main className={`site-shell internal-page page-${page}`} id="top" lang={lang}>
+      <Header lang={lang} setLang={changeLanguage} page={page} />
       <section className="internal-hero">
         <div><a className="back-link" href={route("/", lang)}>← {ui[lang].back}</a><p className="eyebrow">{t.label}</p><h1>{t.title}</h1><p className="internal-lead">{t.lead}</p></div>
         <div className="internal-image"><img src={heroImage} alt="" /></div>

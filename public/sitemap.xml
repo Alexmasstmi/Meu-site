@@ -7,4 +7,18 @@
   <url><loc>https://threearches.co/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://threearches.co/alex</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://threearches.co/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://threearches.co/fi</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://threearches.co/fi/individual-care</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://threearches.co/fi/organizations</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://threearches.co/fi/hospitality</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://threearches.co/fi/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://threearches.co/fi/alex</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://threearches.co/fi/contact</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://threearches.co/pt</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://threearches.co/pt/individual-care</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://threearches.co/pt/organizations</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://threearches.co/pt/hospitality</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://threearches.co/pt/about</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://threearches.co/pt/alex</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://threearches.co/pt/contact</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
