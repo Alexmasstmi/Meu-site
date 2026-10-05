@@ -6,7 +6,7 @@ import type { CSSProperties } from "react";
 export type Lang = "en" | "fi" | "pt";
 export type Page = "home" | "about" | "alex" | "care" | "organizations" | "hospitality" | "contact";
 
-const TIMMA = "https://varaa.timma.fi/reservation/threearchestmialexmendes";
+const TIMMA = "https://timma.fi/yritys/three-arches-tmi-alex-mendes";
 const EMAIL = "alexmendes@threearches.co";
 const WHATSAPP = "https://wa.me/358408093022";
 const MAPS = "https://www.google.com/maps/search/?api=1&query=Snellmaninkatu%2029%20C%2C%2000170%20Helsinki%2C%20Finland";
